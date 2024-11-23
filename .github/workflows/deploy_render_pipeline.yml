@@ -57,7 +57,7 @@ jobs:
                     "image": "ghcr.io/${{ env.lowercase_output }}/my_discord_bot:latest"
                   }
                 }' \
-                https://api.render.com/v1/services/srv-ct0r6ortq21c73ei1p0g/deploys 
+                https://api.render.com/v1/services/srv-ct0rkcpu0jms73c8umr0/deploys 
                   
 
  
