@@ -23,8 +23,8 @@ jobs:
 
               run: |  
                 touch .env
-                echo DISCORD_TOKEN = "$env.DISCORD_TOKEN" >> .env
-                echo GUILD_ID = "$env.GUILD_ID" >> .env
+                echo DISCORD_TOKEN = "${{env.DISCORD_TOKEN}}" >> .env
+                echo GUILD_ID = "${{env.GUILD_ID}}" >> .env
             
             - name: Login to Github container Registry
               env: 
@@ -43,7 +43,7 @@ jobs:
 
             - name: Push Docker image
               run:  docker push ghcr.io/${{env.lowercase_output}}/my_discord_bot:latest
-              
+
             - name: Deploy to Render with Image URL
               env:
                 RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
