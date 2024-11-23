@@ -26,7 +26,7 @@ client.once("ready", async () => {
   const memberIds = members
     .filter((member) => !member.user.bot)
     .map((member) => member.id);
-  schedule.scheduleJob("* * * * *", async () => {
+  schedule.scheduleJob("0 7 * * *", async () => {
     try {
         for (let memberId of memberIds) {
           const member = await client.users.fetch(memberId);
