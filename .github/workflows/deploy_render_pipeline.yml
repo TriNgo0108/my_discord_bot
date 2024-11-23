@@ -43,6 +43,23 @@ jobs:
 
             - name: Push Docker image
               run:  docker push ghcr.io/${{env.lowercase_output}}/my_discord_bot:latest
+    Deploy-to-render:
+      runs-on: ubuntu-latest
+      steps:
+      - name: Deploy to Render with Image URL
+        env:
+          RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+        run: |
+          curl -X POST \
+          -H "Authorization: Bearer ${{env.RENDER_API_KEY}}" \
+          -H "Content-Type: application/json" \
+          -d '{
+            "serviceId": "YOUR_SERVICE_ID",
+            "imageDeploy": {
+              "image": "ghcr.io/${{ env.lowercase_output }}/my_discord_bot:latest"
+            }
+          }' \
+          https://api.render.com/v1/services/srv-ct0r6ortq21c73ei1p0g/deploys 
             
 
  
