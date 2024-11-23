@@ -1,8 +1,12 @@
 import { Client, GatewayIntentBits } from "discord.js";
 import schedule from "node-schedule";
 import dotenv from "dotenv";
+import connect from 'connect';
+import http from 'http';
 
-const port = process.env.PORT || 4000;
+const app = connect();
+http.createServer(app).listen(3000);
+
 dotenv.config();
 
 const client = new Client({
