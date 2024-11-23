@@ -33,12 +33,12 @@ jobs:
 
             - name: Lower case github owner
               id: toLowerCase
-              run: INPUT=${{github.repository_owner }} echo "::set-output name=value::${INPUT,,}"
+              run: INPUT=${{github.repository_owner }} echo "::set-output name=lowerCaseValue::${INPUT,,}"
             - name: Build Docker image
-              run:  docker build -t ghcr.io/${{steps.toLowerCase.outputs.value}}/my_discord_bot:latest .
+              run:  docker build -t ghcr.io/${{steps.toLowerCase.outputs.lowerCaseValue}}/my_discord_bot:latest .
 
             - name: Push Docker image
-              run:  docker push ghcr.io/${{steps.toLowerCase.outputs.value}}/my_discord_bot:latest
+              run:  docker push ghcr.io/${{steps.toLowerCase.outputs.lowerCaseValue}}/my_discord_bot:latest
             
 
  
