@@ -61,12 +61,12 @@ jobs:
         working-directory: iac
 
       - name: Execute Terraform
-        if: ${{env.is-destroy}} == false
+        if: ${{env.is-destroy}} == 'false'
         run: terraform apply -auto-approve -var-file="${{inputs.environment}}.tfvars"
         working-directory: iac
 
       - name: Destroy iac
-        if: ${{env.is-destroy}} == true
+        if: ${{env.is-destroy}} == 'true'
         run: terraform destroy
         working-directory: iac
 
