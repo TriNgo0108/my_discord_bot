@@ -26,7 +26,10 @@ jobs:
         with: 
           aws-region: ${{ secrets.AWS_REGION }}
           role-to-assume: ${{ secrets.AWS_OIDC_IAM_ROLE_ARN }}
-          
+       
+      - name: Zip source code
+        run: zip -r discord_chat_bot.zip index.js node_modules package.json package-lock.json
+
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
 
