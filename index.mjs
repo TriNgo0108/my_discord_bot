@@ -1,7 +1,7 @@
 import { Client, GatewayIntentBits } from "discord.js";
 import dotenv from "dotenv";
 
-export const handler = async (event, context) => {
+export const handler = async (event, context) =>{
   if(!process.env.environment) {
     dotenv.config();  
   }
