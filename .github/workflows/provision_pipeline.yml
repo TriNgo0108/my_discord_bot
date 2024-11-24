@@ -43,12 +43,10 @@ jobs:
             GUILD_ID: ${{secrets.GUILD_ID}}
             OPENAI_API_KEY: ${{secrets.OPENAI_API_KEY}}    
         run: |
-            echo -e "\n"
-            echo DISCORD_TOKEN = "${{env.DISCORD_TOKEN}}" >>"${{inputs.environment}}.tfvars"
-            echo -e "\n"
-            echo GUILD_ID = "${{env.GUILD_ID}}" >> "${{inputs.environment}}.tfvars"
-            echo -e "\n"
-            echo OPENAI_API_KEY = "${{env.OPENAI_API_KEY}}" >> "${{inputs.environment}}.tfvars"
+            echo "DISCORD_TOKEN = \"${{ env.DISCORD_TOKEN }}\"" >> "${{inputs.environment}}.tfvars"
+            echo "GUILD_ID = \"${{ env.GUILD_ID }}\"" >> "${{inputs.environment}}.tfvars"
+            echo "OPENAI_API_KEY = \"${{ env.OPENAI_API_KEY }}\"" >> "${{inputs.environment}}.tfvars"
+            
         working-directory: iac
 
       - name: Setup NodeJs
