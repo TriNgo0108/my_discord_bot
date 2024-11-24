@@ -48,13 +48,13 @@ variable "aws_region" {
 }
 
 
-variable "discord_token" {
+variable "DISCORD_TOKEN" {
   description = "Discord token"
   type = string
   default = ""
 }
 
-variable "guild_id" {
+variable "GUILD_ID" {
   description = "Guild Id"
   type = string
   default = ""

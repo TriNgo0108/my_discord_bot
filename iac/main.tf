@@ -54,8 +54,8 @@ resource "aws_lambda_function" "daily_trigger_lambda" {
   source_code_hash = filesha256(var.daily_trigger_lambda_zip_file)                      
   environment {
     variables = {
-      "DISCORD_TOKEN" = var.discord_token
-      "GUILD_ID" = var.guild_id
+      "DISCORD_TOKEN" = var.DISCORD_TOKEN
+      "GUILD_ID" = var.GUILD_ID
       "ENVIRONMENT" = var.environment
       "OPENAI_API_KEY" = var.OPENAI_API_KEY
     }
