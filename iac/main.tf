@@ -49,7 +49,8 @@ resource "aws_lambda_function" "daily_trigger_lambda" {
   handler       = "index.js" 
   runtime       = "nodejs20.x"
   timeout       = 300                              
-  memory_size   = 128                              
+  memory_size   = 128        
+  filename      = var.daily_trigger_lambda_zip_file                      
 }
 
 

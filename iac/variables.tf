@@ -35,6 +35,12 @@ variable "daily_trigger_scheduler_schedule" {
  default = "daily-trigger-scheduler-schedule"
 }
 
+variable "daily_trigger_lambda_zip_file" {
+  description = "The zipped file of source code"
+  type = string
+  default = "../discord_chat_bot.zip"
+}
+
 variable "aws_region" {
   description = "Default aws region"
   type = string
