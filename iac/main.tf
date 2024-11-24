@@ -112,6 +112,7 @@ resource "aws_scheduler_schedule" "daily_trigger_scheduler" {
    role_arn = aws_iam_role.daily_trigger_scheduler_role.arn
   }
   schedule_expression = "cron(58 6 ? * * *)"
+  schedule_expression_timezone = "Asia/Ho_Chi_Minh"
 }
 
 
