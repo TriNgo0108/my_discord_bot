@@ -17,7 +17,6 @@ export const handler = async (event, context) =>{
     partials: ["CHANNEL"], 
   });
 
-  await client.login(process.env.DISCORD_TOKEN);
 
   const openAiClient = new OpenAI({
     apiKey: process.env.OPENAI_API_KEY, // This is the default and can be omitted
@@ -26,7 +25,7 @@ export const handler = async (event, context) =>{
 
   
   const chatCompletion = await openAiClient.chat.completions.create({
-    messages: [{ role: 'user', content: 'Please act as my wife and send me a sweet, lovely good morning greeting. Also, let me know the weather in Can Tho today, and make sure to say it in Vietnamese' }],
+    messages: [{ role: 'user', content: 'Please act as my wife and send me a sweet and loving good morning message in Vietnamese. Also, kindly include the weather forecast for Can Tho today and add some cute icons. Please keep it warm and loving, and do not add any extra notes.' }],
     model: 'gpt-4o',
   });
   
@@ -60,7 +59,9 @@ export const handler = async (event, context) =>{
       message.reply("Hello! How can I assist you today? 🤖");
     }
   });
-  
 
+  await client.login(process.env.DISCORD_TOKEN);
+
+  await new Promise((resolve) => setTimeout(() => resolve(), 15000))
   return context.logStreamName;
 };
