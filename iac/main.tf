@@ -72,7 +72,7 @@ resource "aws_iam_role" "daily_trigger_scheduler_role" {
 
 
 resource "aws_iam_policy" "daily_trigger_scheduler_policy" {
-  name = var.daily_trigger_scheduler_schedule
+  name = var.daily_trigger_scheduler_policy
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -102,7 +102,7 @@ resource "aws_scheduler_schedule" "daily_trigger_scheduler" {
    arn = aws_lambda_function.daily_trigger_lambda.arn
    role_arn = aws_iam_role.daily_trigger_scheduler_role.arn
   }
-  schedule_expression = "58 6 * * *"
+  schedule_expression = "cron(58 6 * * *)"
 }
 
 

@@ -4,7 +4,7 @@ variable "daily_trigger_lambda_policy" {
   default = "my-discord-bot-core-daily-trigger-lambda-policy"
 }
 
-variable "daily_trigger_scheduler-_policy" {
+variable "daily_trigger_scheduler_policy" {
   description = "Daily trigger scheduler policy"
   type = string
   default = "my-discord-bot-core-daily-trigger-scheduler-policy"
