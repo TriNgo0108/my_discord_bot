@@ -109,7 +109,7 @@ resource "aws_scheduler_schedule" "daily_trigger_scheduler" {
    arn = aws_lambda_function.daily_trigger_lambda.arn
    role_arn = aws_iam_role.daily_trigger_scheduler_role.arn
   }
-  schedule_expression = "cron(58 6 * * *)"
+  schedule_expression = "cron(58 6 ? * * *)"
 }
 
 
