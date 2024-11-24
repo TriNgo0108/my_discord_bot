@@ -50,7 +50,8 @@ resource "aws_lambda_function" "daily_trigger_lambda" {
   runtime       = "nodejs20.x"
   timeout       = 300                              
   memory_size   = 128        
-  filename      = var.daily_trigger_lambda_zip_file                      
+  filename      = var.daily_trigger_lambda_zip_file
+  source_code_hash = filesha256(var.daily_trigger_lambda_zip_file)                      
   environment {
     variables = {
       "DISCORD_TOKEN" = var.discord_token
