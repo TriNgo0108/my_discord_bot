@@ -56,19 +56,18 @@ resource "aws_lambda_function" "daily_trigger_lambda" {
 
 resource "aws_iam_role" "daily_trigger_scheduler_role" {
   name = var.daily_trigger_scheduler_iam_role
-  assume_role_policy = jsondecode({
-    Version = "2012-10-17"
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
     Statement = [
-        {
-            Action = "sts:AssumeRole"
-            Effect = "Allow"
-            Principal = {
-                Service = "scheduler.amazonaws.com"
-            }
+      {
+        Action    = "sts:AssumeRole",
+        Effect    = "Allow",
+        Principal = {
+          Service = "scheduler.amazonaws.com"
         }
+      }
     ]
-    }
-  )
+  })
 }
 
 
