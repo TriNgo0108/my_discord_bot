@@ -42,7 +42,7 @@ export const handler = async (event, context) =>{
           for (let memberId of memberIds) {
             const member = await client.users.fetch(memberId);
             if (member) {
-              await member.send("Good morning! 🌞 Wake up and do some exercise");
+              await member.send(chatCompletion.choices[0].message.content);
               console.log(`✅ Sent daily greeting to ${member.tag}`);
             }
           }
