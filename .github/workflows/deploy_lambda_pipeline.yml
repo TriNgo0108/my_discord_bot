@@ -1,4 +1,4 @@
-name: Deploy Discord bot to Lambda
+name: Deploy Discord bot to Lambda pipeline
 run-name: ${{github.repository_owner}} is deploying new bot version to Lambda
 on:
     push:
