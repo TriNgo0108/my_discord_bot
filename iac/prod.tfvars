@@ -1,0 +1,7 @@
+daily_trigger_lambda_policy = "my-discord-bot-core-daily-trigger-lambda-policy"
+daily_trigger_scheduler_policy = "my-discord-bot-core-daily-trigger-lambda-policy"
+daily_trigger_lambda_iam_role = "my-discord-bot-core-daily-trigger-lambda-iam-role"
+daily_trigger_scheduler_iam_role = "my-discord-bot-core-daily-trigger-scheduler-iam-role"
+daily_trigger_lambda = "my-discord-bot-core-daily-trigger-lambda"
+daily_trigger_scheduler_schedule = "my-discord-bot-core-daily-trigger-scheduler"
+aws_region = "ap-southeast-1"

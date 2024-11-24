@@ -1,0 +1,32 @@
+name: Deploy Discord bot to Render
+run-name: Deploy new chat version to render
+on:
+    push:
+        branches:
+            - main
+jobs:
+    Deploy-to-lambda:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+            
+            - name: Setup NodeJs
+              uses: actions/setup-node@v4
+              with: 
+                node-version: 20
+
+            - name: Prepare .env file
+              env: 
+                DISCORD_TOKEN: ${{secrets.DISCORD_TOKEN}}
+                GUILD_ID: ${{secrets.GUILD_ID}}
+
+              run: |  
+                touch .env
+                echo DISCORD_TOKEN = "${{env.DISCORD_TOKEN}}" >> .env
+                echo GUILD_ID = "${{env.GUILD_ID}}" >> .env
+            
+            
+
+
+
