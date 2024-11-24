@@ -48,3 +48,20 @@ variable "aws_region" {
 }
 
 
+variable "discord_token" {
+  description = "Discord token"
+  type = string
+  default = ""
+}
+
+variable "guild_id" {
+  description = "Guild Id"
+  type = string
+  default = ""
+}
+
+variable "environment" {
+  description = "Level of testing"
+  type = string
+  default = "Prod"
+}

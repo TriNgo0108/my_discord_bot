@@ -51,6 +51,13 @@ resource "aws_lambda_function" "daily_trigger_lambda" {
   timeout       = 300                              
   memory_size   = 128        
   filename      = var.daily_trigger_lambda_zip_file                      
+  environment {
+    variables = {
+      "DISCORD_TOKEN" = var.discord_token
+      "GUILD_ID" = var.guild_id
+      "ENVIRONMENT" = var.environment
+    }
+  }
 }
 
 
