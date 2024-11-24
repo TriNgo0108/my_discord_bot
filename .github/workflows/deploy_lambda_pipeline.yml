@@ -1,5 +1,5 @@
-name: Deploy Discord bot to Render
-run-name: Deploy new chat version to render
+name: Deploy Discord bot to Lambda
+run-name: ${{github.repository_owner}} is deploying new bot version to Lambda
 on:
     push:
         branches:
