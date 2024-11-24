@@ -42,8 +42,8 @@ jobs:
             DISCORD_TOKEN: ${{secrets.DISCORD_TOKEN}}
             GUILD_ID: ${{secrets.GUILD_ID}}    
         run: |
-            echo DISCORD_TOKEN = "${{env.DISCORD_TOKEN}}" >> ${{inputs.environment}}.tfvars
-            echo GUILD_ID = "${{env.GUILD_ID}}" >> ${{inputs.environment}}.tfvars
+            echo DISCORD_TOKEN = "${{env.DISCORD_TOKEN}}" >>"${{inputs.environment}}.tfvars"
+            echo GUILD_ID = "${{env.GUILD_ID}}" >> "${{inputs.environment}}.tfvars"
 
       - name: Setup NodeJs
         uses: actions/setup-node@v4

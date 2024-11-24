@@ -46,7 +46,7 @@ resource "aws_iam_role_policy_attachment" "daily_trigger_attachment" {
 resource "aws_lambda_function" "daily_trigger_lambda" {
   function_name = var.daily_trigger_lambda
   role          = aws_iam_role.daily_trigger_lambda_role.arn
-  handler       = "index.mjs" 
+  handler       = "index.handler" 
   runtime       = "nodejs20.x"
   timeout       = 300                              
   memory_size   = 128        
