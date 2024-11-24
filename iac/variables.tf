@@ -65,3 +65,9 @@ variable "environment" {
   type = string
   default = "Prod"
 }
+
+variable "OPENAI_API_KEY" {
+  description = "Open API Key"
+  type = string
+  default = ""
+}

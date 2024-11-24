@@ -1,5 +1,6 @@
 import { Client, GatewayIntentBits } from "discord.js";
 import dotenv from "dotenv";
+import OpenAI from 'openai';
 
 export const handler = async (event, context) =>{
   if(!process.env.environment) {
@@ -14,6 +15,19 @@ export const handler = async (event, context) =>{
       GatewayIntentBits.GuildMembers,
     ],
     partials: ["CHANNEL"], 
+  });
+
+  await client.login(process.env.DISCORD_TOKEN);
+
+  const openAiClient = new OpenAI({
+    apiKey: process.env.OPENAI_API_KEY, // This is the default and can be omitted
+  });
+
+
+  
+  const chatCompletion = await openAiClient.chat.completions.create({
+    messages: [{ role: 'user', content: 'Please act as my wife and send me a sweet, lovely good morning greeting. Also, let me know the weather in Can Tho today, and make sure to say it in Vietnamese' }],
+    model: 'gpt-4o',
   });
   
   client.once("ready", async () => {
@@ -47,8 +61,6 @@ export const handler = async (event, context) =>{
     }
   });
   
-  // Login to Discord with your bot token
-  client.login(process.env.DISCORD_TOKEN);
-  
+
   return context.logStreamName;
 };

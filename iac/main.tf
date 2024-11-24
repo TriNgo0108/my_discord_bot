@@ -57,6 +57,7 @@ resource "aws_lambda_function" "daily_trigger_lambda" {
       "DISCORD_TOKEN" = var.discord_token
       "GUILD_ID" = var.guild_id
       "ENVIRONMENT" = var.environment
+      "OPENAI_API_KEY" = var.OPENAI_API_KEY
     }
   }
 }

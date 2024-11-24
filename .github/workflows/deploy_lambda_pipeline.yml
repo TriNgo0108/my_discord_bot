@@ -16,11 +16,11 @@ jobs:
               with: 
                 node-version: 20
 
-            - name: Prepare .env file
+            - name: Prepare .env file        
               env: 
                 DISCORD_TOKEN: ${{secrets.DISCORD_TOKEN}}
                 GUILD_ID: ${{secrets.GUILD_ID}}
-
+              working-directory: iac
               run: |  
                 touch .env
                 echo DISCORD_TOKEN = "${{env.DISCORD_TOKEN}}" >> .env

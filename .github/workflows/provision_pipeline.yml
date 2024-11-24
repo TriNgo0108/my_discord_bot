@@ -40,10 +40,12 @@ jobs:
       - name: Add secert key to terraform
         env: 
             DISCORD_TOKEN: ${{secrets.DISCORD_TOKEN}}
-            GUILD_ID: ${{secrets.GUILD_ID}}    
+            GUILD_ID: ${{secrets.GUILD_ID}}
+            OPENAI_API_KEY: ${{secrets.OPENAI_API_KEY}}    
         run: |
             echo DISCORD_TOKEN = "${{env.DISCORD_TOKEN}}" >>"${{inputs.environment}}.tfvars"
             echo GUILD_ID = "${{env.GUILD_ID}}" >> "${{inputs.environment}}.tfvars"
+            echo OPENAI_API_KEY = "${{env.OPENAI_API_KEY}}" >> "${{inputs.environment}}.tfvars"
 
       - name: Setup NodeJs
         uses: actions/setup-node@v4
