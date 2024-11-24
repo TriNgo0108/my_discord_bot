@@ -68,7 +68,7 @@ jobs:
 
       - name: Destroy iac
         if: ${{env.is-destroy == 'true'}}
-        run: terraform destroy
+        run: terraform destroy -auto-approve
         working-directory: iac
 
       
