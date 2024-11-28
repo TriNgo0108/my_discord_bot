@@ -56,11 +56,3 @@ jobs:
                   -H "Content-Type: application/json" \
                   -d '{"clearCache":true}' \
                   https://api.render.com/v1/services/srv-ct0rkcpu0jms73c8umr0/deploys
-
-            
-
-            
-            
-
-
-
