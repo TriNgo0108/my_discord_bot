@@ -54,5 +54,5 @@ jobs:
                 curl -X POST \
                   -H "Authorization: Bearer ${{env.RENDER_API_KEY}}" \
                   -H "Content-Type: application/json" \
-                  -d '{"clearCache":true}' \
+                  -d '{"clearCache":"clear"}' \
                   https://api.render.com/v1/services/srv-ct0rkcpu0jms73c8umr0/deploys
