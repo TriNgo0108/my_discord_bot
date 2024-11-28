@@ -58,7 +58,7 @@ jobs:
         run: npm i 
 
       - name: Zip source code
-        run: zip -r discord_chat_bot.zip index.mjs node_modules package.json package-lock.json
+        run: zip -r trigger-worker.zip src/trigger_worker/index.mjs node_modules package.json package-lock.json
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
