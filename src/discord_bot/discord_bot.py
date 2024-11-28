@@ -8,13 +8,12 @@ import time
 from threading import Thread
 from dotenv import load_dotenv
 import pytz
+from datetime import datetime
 
 load_dotenv()
 
-# OpenAI API Setup
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
-# Discord Bot Setup
 intents = discord.Intents.default()
 intents.guilds = True
 intents.members = True
@@ -67,26 +66,16 @@ async def send_daily_messages():
     except Exception as e:
         print(f"❌ Error fetching members or sending messages: {e}")
 
-def run_scheduler():
-    # Running this in a separate thread
-    while True:
-        # This runs pending scheduled jobs
-        schedule.run_pending()
-        time.sleep(60)  # Check every minute
+def schedule_task():
+    loop = asyncio.get_event_loop()
+    asyncio.run_coroutine_threadsafe(send_daily_messages(), loop)
+
 
 def start_schedule():
-    # Use pytz to define timezone (Asia/Ho_Chi_Minh for Vietnam)
-    vietnam_tz = pytz.timezone('Asia/Ho_Chi_Minh')
+ 
+    # Schedule the task
+    schedule.every().day.at('07:00', "Asia/Ho_Chi_Minh").do(schedule_task)
 
-    def schedule_task():
-        loop = asyncio.get_event_loop()
-        asyncio.run_coroutine_threadsafe(send_daily_messages(), loop)
-
-    # Schedule to run at 7:00 AM VNT
-    schedule.every().day.at("07:00").do(schedule_task)
-
-    # Start scheduler in a new thread
-    Thread(target=run_scheduler, daemon=True).start()
 
 @bot.event
 async def on_ready():
