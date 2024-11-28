@@ -1,14 +1,19 @@
 import discord
 from discord.ext import commands
-import openai
+from openai import OpenAI
 import os
-import time
+import asyncio
 import schedule
 from dotenv import load_dotenv
+from threading import Thread
+import time
 
 load_dotenv()
 
-openai.api_key = os.getenv("OPENAI_API_KEY")
+
+client = OpenAI(
+    api_key=os.getenv("OPENAI_API_KEY"),  # This is the default and can be omitted
+)
 
 intents = discord.Intents.default()
 intents.guilds = True
@@ -18,7 +23,7 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 
 async def get_chat_completion():
     try:
-        response = openai.ChatCompletion.create(
+        response = client.chat.completions.create(
             model="gpt-4",
             messages=[
                 {
@@ -32,7 +37,9 @@ async def get_chat_completion():
                 }
             ],
         )
-        return response["choices"][0]["message"]["content"]
+        response_dict = response.model_dump()   
+        response_message = response_dict["choices"][0]["message"]["content"]
+        return response_message
     except Exception as e:
         print(f"❌ Error generating chat completion: {e}", flush=True)
         return None
@@ -46,8 +53,7 @@ async def send_daily_messages():
         return
 
     try:
-        members = await guild.fetch_members()
-        member_ids = [member.id for member in members if not member.bot]
+        member_ids = [member.id for member in guild.members if not member.bot]
 
         chat_message = await get_chat_completion()
         if chat_message:
@@ -62,25 +68,21 @@ async def send_daily_messages():
     except Exception as e:
         print(f"❌ Error fetching members or sending messages: {e}", flush=True)
 
-
 def run_scheduler():
     # Running this in a separate thread
     while True:
-        # This runs pending scheduled jobs
         schedule.run_pending()
         time.sleep(60)
 
-def start_schedule():
- 
-    # Schedule the task
-    schedule.every().day.at('07:00', "Asia/Ho_Chi_Minh").do(send_daily_messages)
-    run_scheduler()
+def start_schedule(loop):
 
+    schedule.every().day.at('07:00', "Asia/Ho_Chi_Minh").do(lambda: asyncio.run_coroutine_threadsafe(send_daily_messages(), loop))
+    Thread(target=run_scheduler, daemon=True).start()
 
 @bot.event
 async def on_ready():
     print(f"🤖 Logged in as {bot.user}!", flush=True)
-    start_schedule()  # Start the scheduling when the bot is ready
+    start_schedule(bot.loop)
 
 @bot.event
 async def on_message(message):
