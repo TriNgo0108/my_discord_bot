@@ -4,11 +4,7 @@ import openai
 import os
 import asyncio
 import schedule
-import time
-from threading import Thread
 from dotenv import load_dotenv
-import pytz
-from datetime import datetime
 
 load_dotenv()
 
@@ -66,15 +62,11 @@ async def send_daily_messages():
     except Exception as e:
         print(f"❌ Error fetching members or sending messages: {e}")
 
-def schedule_task():
-    loop = asyncio.get_event_loop()
-    asyncio.run_coroutine_threadsafe(send_daily_messages(), loop)
-
 
 def start_schedule():
  
     # Schedule the task
-    schedule.every().day.at('07:00', "Asia/Ho_Chi_Minh").do(schedule_task)
+    schedule.every().day.at('07:00', "Asia/Ho_Chi_Minh").do(send_daily_messages)
 
 
 @bot.event
