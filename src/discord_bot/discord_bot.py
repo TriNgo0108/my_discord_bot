@@ -2,7 +2,7 @@ import discord
 from discord.ext import commands
 import openai
 import os
-import asyncio
+import time
 import schedule
 from dotenv import load_dotenv
 
@@ -63,10 +63,18 @@ async def send_daily_messages():
         print(f"❌ Error fetching members or sending messages: {e}", flush=True)
 
 
+def run_scheduler():
+    # Running this in a separate thread
+    while True:
+        # This runs pending scheduled jobs
+        schedule.run_pending()
+        time.sleep(60)
+
 def start_schedule():
  
     # Schedule the task
     schedule.every().day.at('07:00', "Asia/Ho_Chi_Minh").do(send_daily_messages)
+    run_scheduler()
 
 
 @bot.event
