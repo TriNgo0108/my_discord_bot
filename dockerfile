@@ -13,4 +13,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 EXPOSE 8080 
 
 # Start both the HTTP server and Discord bot
-CMD ["sh", "-c", "python /app/http_server.py & python /app/discord_bot.py"]
+CMD ["sh", "-c", "python /app/my_http_server.py & python /app/discord_bot.py"]
