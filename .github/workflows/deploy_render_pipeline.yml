@@ -10,7 +10,7 @@ on:
           type: boolean
           required: true  
 jobs:
-    Deploy-to-render:
+    deploy-to-render:
         runs-on: ubuntu-latest
         steps:
             - name: Checkout repository
@@ -47,10 +47,10 @@ jobs:
               run: echo ${{env.CR_PAT}} | docker login ghcr.io -u ${{ github.actor }} --password-stdin
             
             - name: Build Docker image
-              run: docker build -t ghcr.io/${{ env.lowercase_output }}/discord-bot:latest .
+              run: docker build -t ghcr.io/${{ env.lowercase_output }}/my_discord_bot:latest .
       
             - name: Push Docker image
-              run: docker push ghcr.io/${{ env.lowercase_output }}/discord-bot:latest
+              run: docker push ghcr.io/${{ env.lowercase_output }}/my_discord_bot:latest
 
             - name: Deploy to Render
               env:
