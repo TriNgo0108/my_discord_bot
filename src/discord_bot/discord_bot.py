@@ -34,7 +34,7 @@ async def get_chat_completion():
         )
         return response["choices"][0]["message"]["content"]
     except Exception as e:
-        print(f"❌ Error generating chat completion: {e}")
+        print(f"❌ Error generating chat completion: {e}", flush=True)
         return None
 
 async def send_daily_messages():
@@ -42,7 +42,7 @@ async def send_daily_messages():
     guild = bot.get_guild(guild_id)
 
     if not guild:
-        print("❌ Guild not found!")
+        print("❌ Guild not found!", flush=True)
         return
 
     try:
@@ -56,11 +56,11 @@ async def send_daily_messages():
                     user = await bot.fetch_user(member_id)
                     if user:
                         await user.send(chat_message)
-                        print(f"✅ Sent daily greeting to {user.name}")
+                        print(f"✅ Sent daily greeting to {user.name}", flush=True)
                 except Exception as e:
-                    print(f"❌ Failed to send message to {member_id}: {e}")
+                    print(f"❌ Failed to send message to {member_id}: {e}", flush=True)
     except Exception as e:
-        print(f"❌ Error fetching members or sending messages: {e}")
+        print(f"❌ Error fetching members or sending messages: {e}", flush=True)
 
 
 def start_schedule():
@@ -71,7 +71,7 @@ def start_schedule():
 
 @bot.event
 async def on_ready():
-    print(f"🤖 Logged in as {bot.user}!")
+    print(f"🤖 Logged in as {bot.user}!", flush=True)
     start_schedule()  # Start the scheduling when the bot is ready
 
 @bot.event
