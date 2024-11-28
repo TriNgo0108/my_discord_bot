@@ -174,7 +174,7 @@ resource "aws_iam_policy" "trigger_worker_scheduler_policy" {
         Action   = [
             "lambda:InvokeFunction"
         ],
-        Resource = aws_lambda_function.trigger_worker.arn
+        Resource = aws_lambda_function.trigger_worker_lambda.arn
         Effect   = "Allow"
       },
     ]
