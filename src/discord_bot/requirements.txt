@@ -2,4 +2,3 @@ discord.py
 openai
 schedule
 python-dotenv
-pytz
