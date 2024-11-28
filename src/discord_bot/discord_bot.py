@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-from openai import OpenAI
+import openai
 import os
 import asyncio
 import schedule
@@ -11,9 +11,7 @@ import time
 load_dotenv()
 
 
-client = OpenAI(
-    api_key=os.getenv("OPENAI_API_KEY"),  # This is the default and can be omitted
-)
+openai.api_key = os.getenv("OPENAI_API_KEY")
 
 intents = discord.Intents.default()
 intents.guilds = True
@@ -23,7 +21,7 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 
 async def get_chat_completion():
     try:
-        response = client.chat.completions.create(
+        response = openai.chat.completions.create(
             model="gpt-4",
             messages=[
                 {
