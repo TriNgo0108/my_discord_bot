@@ -50,7 +50,7 @@ async def send_daily_messages():
         return
 
     try:
-        members = await guild.fetch_members().flatten()
+        members = await guild.fetch_members()
         member_ids = [member.id for member in members if not member.bot]
 
         chat_message = await get_chat_completion()
