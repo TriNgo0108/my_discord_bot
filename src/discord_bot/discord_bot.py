@@ -7,10 +7,19 @@ import schedule
 import time
 from threading import Thread
 from dotenv import load_dotenv
+import pytz
 
 load_dotenv()
+
 # OpenAI API Setup
 openai.api_key = os.getenv("OPENAI_API_KEY")
+
+# Discord Bot Setup
+intents = discord.Intents.default()
+intents.guilds = True
+intents.members = True
+
+bot = commands.Bot(command_prefix="!", intents=intents)
 
 async def get_chat_completion():
     try:
@@ -32,16 +41,6 @@ async def get_chat_completion():
     except Exception as e:
         print(f"❌ Error generating chat completion: {e}")
         return None
-
-# Discord Bot Setup
-intents = discord.Intents.default()
-intents.guilds = True
-intents.direct_messages = True
-intents.members = True
-intents.messages = True
-intents.message_content = True
-
-bot = commands.Bot(command_prefix="!", intents=intents)
 
 async def send_daily_messages():
     guild_id = int(os.getenv("GUILD_ID"))
@@ -68,24 +67,31 @@ async def send_daily_messages():
     except Exception as e:
         print(f"❌ Error fetching members or sending messages: {e}")
 
-def schedule_tasks():
-    async def run_daily_messages():
-        await send_daily_messages()
-
-    # Schedule daily messages at 9:00 AM
-    schedule.every().day.at("07:00").do(lambda: asyncio.run(run_daily_messages()))
-
+def run_scheduler():
+    # Running this in a separate thread
     while True:
+        # This runs pending scheduled jobs
         schedule.run_pending()
-        time.sleep(1)
+        time.sleep(60)  # Check every minute
 
-# Start Scheduler in a Separate Thread
-scheduler_thread = Thread(target=schedule_tasks, daemon=True)
-scheduler_thread.start()
+def start_schedule():
+    # Use pytz to define timezone (Asia/Ho_Chi_Minh for Vietnam)
+    vietnam_tz = pytz.timezone('Asia/Ho_Chi_Minh')
+
+    def schedule_task():
+        loop = asyncio.get_event_loop()
+        asyncio.run_coroutine_threadsafe(send_daily_messages(), loop)
+
+    # Schedule to run at 7:00 AM VNT
+    schedule.every().day.at("07:00").do(schedule_task)
+
+    # Start scheduler in a new thread
+    Thread(target=run_scheduler, daemon=True).start()
 
 @bot.event
 async def on_ready():
     print(f"🤖 Logged in as {bot.user}!")
+    start_schedule()  # Start the scheduling when the bot is ready
 
 @bot.event
 async def on_message(message):
