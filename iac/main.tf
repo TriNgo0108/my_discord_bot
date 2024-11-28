@@ -63,6 +63,22 @@ resource "aws_iam_role" "trigger_worker_scheduler_role" {
   })
 }
 
+ resource "aws_iam_role" "trigger_worker_lambda_role" {
+  name = var.trigger_worker_lambda_iam_role
+  assume_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Action    = "sts:AssumeRole",
+        Effect    = "Allow",
+        Principal = {
+          Service = "lambda.amazonaws.com"
+        }
+      }
+    ]
+  })
+}
+
 resource "aws_iam_policy" "trigger_worker_scheduler_policy" {
   name = var.trigger_worker_scheduler_policy
   policy = jsonencode({
