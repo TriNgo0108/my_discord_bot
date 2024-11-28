@@ -64,5 +64,5 @@ variable "environment" {
 variable "worker_endpoint" {
   description = "The endpoint of worker"
   type = string
-  default = "https://my-discord-bot-latest.onrender.com"
+  default = "https://my-discord-bot-latest.onrender.com/health"
 }
