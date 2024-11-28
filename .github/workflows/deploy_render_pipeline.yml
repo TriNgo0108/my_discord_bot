@@ -1,0 +1,64 @@
+name: Deploy Discord bot to Render
+run-name: ${{github.repository_owner}} is deploying new bot version to Render
+on:
+    push:
+        branches:
+            - main
+jobs:
+    Deploy-to-render:
+        runs-on: ubuntu-latest
+        steps:
+            - name: Checkout repository
+              uses: actions/checkout@v4
+            
+            - name: Setup Python
+              uses: actions/setup-python@v5
+              with: 
+                python-version: 3.11.9
+
+            - name: Prepare .env file        
+              env: 
+                DISCORD_TOKEN: ${{secrets.DISCORD_TOKEN}}
+                GUILD_ID: ${{secrets.GUILD_ID}}
+                OPENAI_API_KEY: ${{secrets.OPENAI_API_KEY}}
+              run: |  
+                touch .env
+                echo DISCORD_TOKEN = "${{env.DISCORD_TOKEN}}" >> .env
+                echo GUILD_ID = "${{env.GUILD_ID}}" >> .env
+                echo OPENAI_API_KEY "${{env.OPENAI_API_KEY}}" >> .env
+
+              working-directory: src\my_discord_bot
+
+            - name: Convert to lowercase
+              run: |
+                LOWERCASE=$(echo "${{github.repository_owner}}" | tr '[:upper:]' '[:lower:]')
+                echo "Lowercase: $LOWERCASE"
+                echo "lowercase_output=$LOWERCASE" >> $GITHUB_ENV
+              
+            
+            - name: Log in to GitHub Container Registry
+              run: echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+            
+            - name: Build Docker image
+              run: docker build -t ghcr.io/${{ env.lowercase_output }}/discord-bot:latest .
+      
+            - name: Push Docker image
+              run: docker push ghcr.io/${{ env.lowercase_output }}/discord-bot:latest
+
+            - name: Deploy to Render
+              env:
+                RENDER_API_KEY: ${{ secrets.RENDER_API_KEY }}
+              run: |
+                curl -X POST \
+                  -H "Authorization: Bearer ${{env.RENDER_API_KEY}}" \
+                  -H "Content-Type: application/json" \
+                  -d '{"clearCache":true}' \
+                  https://api.render.com/v1/services/srv-ct0rkcpu0jms73c8umr0/deploys
+
+            
+
+            
+            
+
+
+

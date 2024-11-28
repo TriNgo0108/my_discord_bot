@@ -111,7 +111,7 @@ resource "aws_scheduler_schedule" "trigger_worker_scheduler" {
    arn = aws_lambda_function.trigger_worker_lambda.arn
    role_arn = aws_iam_role.trigger_worker_scheduler_role.arn
   }
-  schedule_expression = "cron(13 * ? * * *)"
+  schedule_expression = "cron(*/13 * ? * * *)"
   schedule_expression_timezone = "Asia/Ho_Chi_Minh"
 }
 terraform {
