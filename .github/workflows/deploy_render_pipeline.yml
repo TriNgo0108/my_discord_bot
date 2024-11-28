@@ -26,14 +26,13 @@ jobs:
                 DISCORD_TOKEN: ${{secrets.DISCORD_TOKEN}}
                 GUILD_ID: ${{secrets.GUILD_ID}}
                 OPENAI_API_KEY: ${{secrets.OPENAI_API_KEY}}
-              run: |  
+              run: |
+                cd discord_bot  
                 touch .env
                 echo -e "\nDISCORD_TOKEN = \"${{ env.DISCORD_TOKEN }}\"" >> .env
                 echo -e "\nGUILD_ID = \"${{ env.GUILD_ID }}\"" >> .env
                 echo -e "\nOPENAI_API_KEY = \"${{ env.OPENAI_API_KEY }}\"" >> .env
-
-
-              working-directory: src/discord_bot
+              working-directory: src
 
             - name: Convert to lowercase
               run: |
