@@ -27,7 +27,7 @@ jobs:
                 echo GUILD_ID = "${{env.GUILD_ID}}" >> .env
                 echo OPENAI_API_KEY "${{env.OPENAI_API_KEY}}" >> .env
 
-              working-directory: src\my_discord_bot
+              working-directory: src/discord_bot
 
             - name: Convert to lowercase
               run: |

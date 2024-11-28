@@ -5,7 +5,7 @@ FROM 3.11.10-alpine3.19
 WORKDIR /app
 
 # Copy requirements file and install dependencies
-COPY src/my_discord_bot /app
+COPY src/discord_bot /app
 RUN pip install --no-cache-dir -r requirements.txt
 
 
