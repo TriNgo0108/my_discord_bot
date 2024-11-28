@@ -1,5 +1,5 @@
 # Use official Python image as the base
-FROM 3.11.10-alpine3.19
+FROM python:3.11.10-alpine3.19
 
 # Set working directory
 WORKDIR /app
