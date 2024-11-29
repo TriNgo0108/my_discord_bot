@@ -10,7 +10,7 @@ import time
 
 load_dotenv()
 
-
+print(f"openai version {openai.__version__} ", flush=True)
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 intents = discord.Intents.default()
