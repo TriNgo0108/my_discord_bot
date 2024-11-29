@@ -74,7 +74,9 @@ def run_scheduler():
 
 def start_schedule(loop):
 
-    schedule.every().day.at('07:00', "Asia/Ho_Chi_Minh").do(lambda: asyncio.run_coroutine_threadsafe(send_daily_messages(), loop))
+    #schedule.every().day.at('07:00', "Asia/Ho_Chi_Minh").do(lambda: asyncio.run_coroutine_threadsafe(send_daily_messages(), loop))
+    schedule.every().minute.do(lambda: asyncio.run_coroutine_threadsafe(send_daily_messages(), loop))
+
     Thread(target=run_scheduler, daemon=True).start()
 
 @bot.event

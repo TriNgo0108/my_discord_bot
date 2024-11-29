@@ -1,5 +1,5 @@
 discord.py
-openai
+openai == 1.55.0
 schedule
 python-dotenv
 pytz
