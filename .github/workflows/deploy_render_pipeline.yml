@@ -1,9 +1,10 @@
 name: Deploy Discord bot to Render
 run-name: ${{github.repository_owner}} is deploying new bot version to Render
 on:
-    # push:
-    #     branches:
-    #         - main
+    push:
+         branches:
+             - main
+             
     workflow_dispatch:
       inputs:
         ready-to-deploy:
