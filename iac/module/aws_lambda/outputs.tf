@@ -1,9 +1,9 @@
 output "name" {
   description = "Name of this function"
-  value = try(aws_lambda_function.lambda[0].name, "")
+  value = try(aws_lambda_function.lambda.name, "")
 }
 
 output "arn" {
   description = "ARN of this function"
-  value = try(aws_lambda_function.lambda[0].arn)
+  value = try(aws_lambda_function.lambda.arn)
 }
