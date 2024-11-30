@@ -172,6 +172,7 @@ module "daily_message_lambda" {
     "OPENAI_API_KEY" = var.openai_api_key
     "ENVIRONMENT" = var.environment
   }
+  mode = var.daily_message_scheduler_mode
 }
 terraform {
 backend "s3" {

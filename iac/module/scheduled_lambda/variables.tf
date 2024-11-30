@@ -94,7 +94,6 @@ variable "runtime" {
 variable "mode" {
   description = "Flexible time window mode"
   type = string
-  default = ""
   nullable = false
 }
 

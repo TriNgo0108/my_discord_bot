@@ -96,3 +96,8 @@ variable "openai_api_key" {
   type = string
   default = ""
 }
+variable "daily_message_scheduler_mode" {
+  description = "Daily message scheduler mode"
+  type = string
+  default = ""
+}
