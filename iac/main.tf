@@ -114,6 +114,65 @@ resource "aws_scheduler_schedule" "trigger_worker_scheduler" {
   schedule_expression = "cron(*/13 * ? * * *)"
   schedule_expression_timezone = "Asia/Ho_Chi_Minh"
 }
+
+module "daily_message_lambda" {
+  source = "./module/scheduled_lambda"
+  function_name = format("%s-lambda", var.daily_message_scheduled_function_name)
+  function_policy_name =format("%s-lambda-policy", var.daily_message_scheduled_function_name)
+  function_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action   = [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents"
+        ],
+        Resource = "arn:aws:logs:*:*:*"
+        Effect   = "Allow"
+      },
+    ]
+  })
+  function_role_name = format("%s-lambda-role", var.daily_message_scheduled_function_name)
+  function_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Action    = "sts:AssumeRole",
+        Effect    = "Allow",
+        Principal = {
+          Service = "lambda.amazonaws.com"
+        }
+      }
+    ]
+  })
+  handler = "index.handler"
+  runtime = "nodejs20.x"
+  file_location = var.daily_message_lambda_zip_file
+  schedule_expression = "cron(0 7 ? * * *)"
+  schedule_expression_timezone = "Asia/Ho_Chi_Minh"
+  scheduler_name = format("%s-scheduler", var.daily_message_scheduled_function_name)
+  scheduler_policy_name = format("%s-scheduler-policy", var.daily_message_scheduled_function_name)
+  scheduler_role_name = format("%$-scheduler-role", var.daily_message_scheduled_function_name)
+  scheduler_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Action    = "sts:AssumeRole",
+        Effect    = "Allow",
+        Principal = {
+          Service = "scheduler.amazonaws.com"
+        }
+      }
+    ]
+  })
+ environment_values = {
+    "DISCORD_TOKEN" = var.discord_token
+    "GUILD_ID" = var.guild_id
+    "OPENAI_API_KEY" = var.openai_api_key
+    "ENVIRONMENT" = var.environment
+  }
+}
 terraform {
 backend "s3" {
   bucket = "my-discord-bot-core-terraform-state"

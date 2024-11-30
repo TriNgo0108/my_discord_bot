@@ -52,11 +52,6 @@ variable "scheduler_policy_name" {
   nullable = false
 }
 
-variable "scheduler_policy" {
-  description = "Policy of scheduler function"
-  type = string
-  nullable = false
-}
 
 variable "handler" {
   description = "Handler of this function"
@@ -87,7 +82,7 @@ variable "file_location" {
 variable "environment_values" {
   description = "Environment values"
   type = map(string)
-  nullable = false
+  nullable = true
 }
 
 variable "runtime" {

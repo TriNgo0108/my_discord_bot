@@ -46,10 +46,16 @@ jobs:
       - name: Install packages
         run: npm i 
 
-      - name: Zip source code
+      - name: Zip trigger worker source code
         run: |
          cp "src/trigger_worker/index.mjs" "index.mjs"
          zip -r trigger-worker.zip index.mjs node_modules package.json package-lock.json
+         rm -f index.mjs
+
+      - name: Zip daily message source code
+        run: |
+          cp "src/daily_message/index.mjs" "index.mjs"
+          zip -r daily_message.zip index.mjs node_modules package.json package-lock.json
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
@@ -58,6 +64,16 @@ jobs:
         run: terraform init
         working-directory: iac
 
+      - name: Add secerts key to terraform
+        env:
+          DISCORD_TOKEN: ${{secrets.DISCORD_TOKEN}}
+          GUILD_ID: ${{secrets.GUILD_ID}}
+          OPENAI_API_KEY: ${{secrets.OPENAI_API_KEY}}
+        run: |
+            echo -e "\nDISCORD_TOKEN = \"${{ env.DISCORD_TOKEN }}\"" >> "${{inputs.environment}}.tfvars"
+            echo -e "\nGUILD_ID = \"${{ env.GUILD_ID }}\"" >> "${{inputs.environment}}.tfvars"
+            echo -e "\nOPENAI_API_KEY = \"${{ env.OPENAI_API_KEY }}\"" >> "${{inputs.environment}}.tfvars"
+        working-directory: iac
 
       - name: Validate Terraform syntax
         run: terraform validate

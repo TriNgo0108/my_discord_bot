@@ -35,7 +35,18 @@ module "scheduler_iam_role" {
 module "scheduler_iam_policy" {
   source = "../aws_iam_policy"
   policy_name = var.scheduler_policy_name
-  policy = var.scheduler_policy
+  policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action   = [
+            "lambda:InvokeFunction"
+        ],
+        Resource = scheduled_function.arn
+        Effect   = "Allow"
+      },
+    ]
+  })
 }
 
 
@@ -51,6 +62,6 @@ module "function_scheduler" {
   target_arn = module.scheduled_function.arn
   scheduler_iam_role_arn = module.scheduler_iam_role.arn
   schedule_expression = var.schedule_expression
-  schedule_expression_timezone = var.schedule_expression_timezonecl
+  schedule_expression_timezone = var.schedule_expression_timezone
 }
 

@@ -66,3 +66,33 @@ variable "worker_endpoint" {
   type = string
   default = "https://my-discord-bot-latest.onrender.com/health"
 }
+
+variable "daily_message_lambda_zip_file" {
+  description = "The location of daily message zip file"
+  type = string
+  default = ""
+}
+
+variable "daily_message_scheduled_function_name" {
+  description = "The name of daily message"
+  type = string
+  default = "daily-message-core"
+}
+
+variable "discord_token" {
+  description = "Discord token uses login bot"
+  type = string
+  default = ""
+}
+
+variable "guild_id" {
+  description = "Id of current guild"
+  type = string
+  default = ""
+}
+
+variable "openai_api_key" {
+  description = "API key of OpenAI"
+  type = string
+  default = ""
+}
