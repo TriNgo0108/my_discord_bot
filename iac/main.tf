@@ -153,7 +153,7 @@ module "daily_message_lambda" {
   schedule_expression_timezone = "Asia/Ho_Chi_Minh"
   scheduler_name = format("%s-scheduler", var.daily_message_scheduled_function_name)
   scheduler_policy_name = format("%s-scheduler-policy", var.daily_message_scheduled_function_name)
-  scheduler_role_name = format("%$-scheduler-role", var.daily_message_scheduled_function_name)
+  scheduler_role_name = format("%s-scheduler-role", var.daily_message_scheduled_function_name)
   scheduler_role_policy = jsonencode({
     Version = "2012-10-17",
     Statement = [
