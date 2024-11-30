@@ -42,7 +42,7 @@ module "scheduler_iam_policy" {
         Action   = [
             "lambda:InvokeFunction"
         ],
-        Resource = scheduled_function.arn
+        Resource = module.scheduled_function.arn
         Effect   = "Allow"
       },
     ]
