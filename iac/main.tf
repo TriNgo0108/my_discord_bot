@@ -174,7 +174,7 @@ module "daily_message_lambda" {
   }
   mode = var.daily_message_scheduler_mode
 }
-module "daily_message_lambda" {
+module "drink_water_lambda" {
   source = "./module/scheduled_lambda"
   function_name = format("%s-lambda", var.drink_water_reminder_function_name)
   function_policy_name =format("%s-lambda-policy", var.drink_water_reminder_function_name)
