@@ -174,6 +174,65 @@ module "daily_message_lambda" {
   }
   mode = var.daily_message_scheduler_mode
 }
+module "daily_message_lambda" {
+  source = "./module/scheduled_lambda"
+  function_name = format("%s-lambda", var.drink_water_reminder_function_name)
+  function_policy_name =format("%s-lambda-policy", var.drink_water_reminder_function_name)
+  function_policy = jsonencode({
+    Version = "2012-10-17"
+    Statement = [
+      {
+        Action   = [
+          "logs:CreateLogGroup",
+          "logs:CreateLogStream",
+          "logs:PutLogEvents"
+        ],
+        Resource = "arn:aws:logs:*:*:*"
+        Effect   = "Allow"
+      },
+    ]
+  })
+  function_role_name = format("%s-lambda-role", var.drink_water_reminder_function_name)
+  function_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Action    = "sts:AssumeRole",
+        Effect    = "Allow",
+        Principal = {
+          Service = "lambda.amazonaws.com"
+        }
+      }
+    ]
+  })
+  handler = "index.handler"
+  runtime = "nodejs20.x"
+  file_location = var.drink_water_reminder_lambda_zip_file
+  schedule_expression = "cron(0 7,8,10,12,13,15,17,19,20,21 ? * * *)"
+  schedule_expression_timezone = "Asia/Ho_Chi_Minh"
+  scheduler_name = format("%s-scheduler", var.var.drink_water_reminder_function_name)
+  scheduler_policy_name = format("%s-scheduler-policy", var.var.drink_water_reminder_function_name)
+  scheduler_role_name = format("%s-scheduler-role", var.var.drink_water_reminder_function_name)
+  scheduler_role_policy = jsonencode({
+    Version = "2012-10-17",
+    Statement = [
+      {
+        Action    = "sts:AssumeRole",
+        Effect    = "Allow",
+        Principal = {
+          Service = "scheduler.amazonaws.com"
+        }
+      }
+    ]
+  })
+ environment_values = {
+    "DISCORD_TOKEN" = var.discord_token
+    "GUILD_ID" = var.guild_id
+    "OPENAI_API_KEY" = var.openai_api_key
+    "ENVIRONMENT" = var.environment
+  }
+  mode = var.drink_water_reminder_scheduler_mode
+}
 terraform {
 backend "s3" {
   bucket = "my-discord-bot-core-terraform-state"

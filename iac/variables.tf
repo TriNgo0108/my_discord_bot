@@ -101,3 +101,21 @@ variable "daily_message_scheduler_mode" {
   type = string
   default = ""
 }
+
+variable "drink_water_reminder_lambda_zip_file" {
+  description = "The location of daily message zip file"
+  type = string
+  default = ""
+}
+
+variable "drink_water_reminder_function_name" {
+  description = "The name of daily message"
+  type = string
+  default = "drink-water-reminder-core"
+}
+
+variable "drink_water_reminder_scheduler_mode" {
+  description = "Daily message scheduler mode"
+  type = string
+  default = ""
+}

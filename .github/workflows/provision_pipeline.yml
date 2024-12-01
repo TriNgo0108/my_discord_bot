@@ -56,6 +56,14 @@ jobs:
         run: |
           cp "src/daily_message/index.mjs" "index.mjs"
           zip -r daily_message.zip index.mjs node_modules package.json package-lock.json
+          rm -f index.mjs
+
+      - name: Zip drink water reminder source code
+        run: |
+         cp "src/drink_water_reminder/index.mjs" "index.mjs"
+         zip -r drink_water_reminder.zip index.mjs node_modules package.json package-lock.json
+         rm -f index.mjs
+
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v3
