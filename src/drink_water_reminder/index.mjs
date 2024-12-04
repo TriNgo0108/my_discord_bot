@@ -35,23 +35,15 @@ export const handler = async (event, context) =>{
             const member = await client.users.fetch(memberId);
             if (member) {
               await member.send(chatCompletion.choices[0].message.content);
-              console.log(`✅ Sent daily drink water to ${member.tag}`);
+              console.log(`Sent drink water message to ${member.tag}`);
             }
           }
       } catch (error) {
-        console.error("❌ Failed to send daily message:", error);
+        console.error("Failed to send drink water message:", error);
       }
   
   });
   
-  client.on("messageCreate", (message) => {
-    if (message.author.bot) return;
-  
-    // Respond to a greeting
-    if (message.content.toLowerCase().includes("hello")) {
-      message.reply("Hello! How can I assist you today? 🤖");
-    }
-  });
   await client.login(process.env.DISCORD_TOKEN);
   await new Promise((resolve) => setTimeout(() => resolve(), 10000))
   return context.logStreamName;
