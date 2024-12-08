@@ -18,7 +18,7 @@ export const handler = async (event, context) =>{
   });
   
   const chatCompletion = await openAiClient.chat.completions.create({
-    messages: [{ role: 'user', content: 'Please act as my wife and send me a warm and loving reminder in Vietnamese to drink water. Include some health tips for today, add cute and playful icons to make it cheerful, and keep the tone gentle and caring. Avoid including any extra notes or signature.' }],
+    messages: [{ role: 'user', content: 'Please act as my wife and send me a warm and loving reminder in Vietnamese to drink water and keep the tone gentle, caring. Avoid including any extra notes or signature. The message should be simple as possible' }],
     model: 'gpt-4',
   });
   

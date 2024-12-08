@@ -18,7 +18,7 @@ export const handler = async (event, context) =>{
   });
   
   const chatCompletion = await openAiClient.chat.completions.create({
-    messages: [{ role: 'user', content: 'Please act as my wife and send me a sweet and loving good morning message in Vietnamese. Also, kindly include the weather forecast for Can Tho today and add some cute icons. Please keep it warm and loving, and do not add any extra notes, signature.' }],
+    messages: [{ role: 'user', content: 'Please act as my wife and send me a sweet and loving good morning message in Vietnamese. Also, kindly include the weather forecast for Can Tho today and add some cute icons. Please keep it warm and loving, and do not add any extra notes, signature. The message should be simple as possible' }],
     model: 'gpt-4',
   });
   
