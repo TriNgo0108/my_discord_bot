@@ -169,7 +169,7 @@ module "daily_message_lambda" {
  environment_values = {
     "DISCORD_TOKEN" = var.discord_token
     "GUILD_ID" = var.guild_id
-    "OPENAI_API_KEY" = var.openai_api_key
+    "GOOGLE_GEMINI_KEY" = var.google_gemini_key
     "ENVIRONMENT" = var.environment
   }
   mode = var.daily_message_scheduler_mode
@@ -228,7 +228,7 @@ module "drink_water_lambda" {
  environment_values = {
     "DISCORD_TOKEN" = var.discord_token
     "GUILD_ID" = var.guild_id
-    "OPENAI_API_KEY" = var.openai_api_key
+    "GOOGLE_GEMINI_KEY" = var.google_gemini_key
     "ENVIRONMENT" = var.environment
   }
   mode = var.drink_water_reminder_scheduler_mode

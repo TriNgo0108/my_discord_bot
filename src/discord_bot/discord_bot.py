@@ -1,13 +1,9 @@
 import discord
 from discord.ext import commands
-import openai
 import os
 from dotenv import load_dotenv
 
 load_dotenv()
-
-print(f"openai version {openai.__version__} ", flush=True)
-openai.api_key = os.getenv("OPENAI_API_KEY")
 
 intents = discord.Intents.default()
 intents.guilds = True

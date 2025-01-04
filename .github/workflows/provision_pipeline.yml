@@ -76,11 +76,11 @@ jobs:
         env:
           DISCORD_TOKEN: ${{secrets.DISCORD_TOKEN}}
           GUILD_ID: ${{secrets.GUILD_ID}}
-          OPENAI_API_KEY: ${{secrets.OPENAI_API_KEY}}
+          GOOGLE_GEMINI_KEY: ${{secrets.GOOGLE_GEMINI_KEY}}
         run: |
             echo -e "\ndiscord_token = \"${{ env.DISCORD_TOKEN }}\"" >> "${{inputs.environment}}.tfvars"
             echo -e "\nguild_id = \"${{ env.GUILD_ID }}\"" >> "${{inputs.environment}}.tfvars"
-            echo -e "\nopenai_api_key = \"${{ env.OPENAI_API_KEY }}\"" >> "${{inputs.environment}}.tfvars"
+            echo -e "\ngoogle_gemini_key = \"${{ env.GOOGLE_GEMINI_KEY }}\"" >> "${{inputs.environment}}.tfvars"
         working-directory: iac
 
       - name: Validate Terraform syntax

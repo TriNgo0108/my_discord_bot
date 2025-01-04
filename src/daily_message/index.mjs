@@ -1,6 +1,6 @@
 import { Client, GatewayIntentBits } from "discord.js";
 import dotenv from "dotenv";
-import OpenAI from 'openai';
+import { GoogleGenerativeAI } from "@google/generative-ai";
 export const handler = async (event, context) =>{
   if(!process.env.environment) {
     dotenv.config();  
@@ -13,15 +13,15 @@ export const handler = async (event, context) =>{
     ],
     partials: ["CHANNEL"], 
   });
-  const openAiClient = new OpenAI({
-    apiKey: process.env.OPENAI_API_KEY, 
-  });
+
   
-  const chatCompletion = await openAiClient.chat.completions.create({
-    messages: [{ role: 'user', content: 'Please act as my wife and send me a sweet and loving good morning message in Vietnamese. Also, kindly include the weather forecast for Can Tho today and add some cute icons. Please keep it warm and loving, and do not add any extra notes, signature. The message should be simple as possible' }],
-    model: 'gpt-4',
-  });
+  const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GEMINI_KEY);
+  const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
   
+  const prompt = "Please act as my wife and send me a warm and loving reminder in Vietnamese to drink water and keep the tone gentle, caring. Avoid including any extra notes or signature. The message should be simple as possible";
+  
+  const result = await model.generateContent(prompt);
+
   client.once("ready", async () => {
     console.log(`Logged in as ${client.user.tag}!`);
     const guildId = process.env.GUILD_ID;
@@ -34,7 +34,7 @@ export const handler = async (event, context) =>{
           for (let memberId of memberIds) {
             const member = await client.users.fetch(memberId);
             if (member) {
-              await member.send(chatCompletion.choices[0].message.content);
+              await member.send(result);
               console.log(`Sent daily greeting to ${member.tag}`);
             }
           }

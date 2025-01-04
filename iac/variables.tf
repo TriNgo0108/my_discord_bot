@@ -91,8 +91,8 @@ variable "guild_id" {
   default = ""
 }
 
-variable "openai_api_key" {
-  description = "API key of OpenAI"
+variable "google_gemini_key" {
+  description = "API key of GoogleAI"
   type = string
   default = ""
 }
