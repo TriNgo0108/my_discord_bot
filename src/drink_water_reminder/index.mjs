@@ -1,5 +1,6 @@
 import { Client, GatewayIntentBits } from "discord.js";
 import dotenv from "dotenv";
+import { GoogleGenerativeAI } from "@google/generative-ai";
 export const handler = async (event, context) =>{
   if(!process.env.environment) {
     dotenv.config();  
