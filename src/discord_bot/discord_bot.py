@@ -21,3 +21,4 @@ def who_you_are(ctx, arg):
 
 if __name__ == "__main__":
     bot.run(os.getenv("DISCORD_TOKEN"))
+    bot.add_command(who_you_are)
