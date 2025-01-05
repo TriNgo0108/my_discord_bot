@@ -15,11 +15,11 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 async def on_ready():
     print(f"🤖 Logged in as {bot.user}!", flush=True)
 
-@bot.event
-async def on_message(message):
+# @bot.event
+# async def on_message(message):
 
-    if "hello" in message.content.lower():
-        await message.reply("Hello! How can I assist you today? 🤖")
+#     if "hello" in message.content.lower():
+#         await message.reply("Hello! How can I assist you today? 🤖")
 
 if __name__ == "__main__":
     bot.run(os.getenv("DISCORD_TOKEN"))
