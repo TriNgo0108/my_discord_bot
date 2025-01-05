@@ -17,8 +17,6 @@ async def on_ready():
 
 @bot.event
 async def on_message(message):
-    if message.author.bot:
-        return
 
     if "hello" in message.content.lower():
         await message.reply("Hello! How can I assist you today? 🤖")
