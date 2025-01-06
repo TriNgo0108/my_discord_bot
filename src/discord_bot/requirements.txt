@@ -1,6 +1,5 @@
 discord.py
 httpx == 0.27.1
 openai == 1.55.2
-schedule
 python-dotenv
-pytz
+google-generativeai
