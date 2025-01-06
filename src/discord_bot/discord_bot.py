@@ -39,19 +39,15 @@ async def expert(ctx, *args):
         question = " ".join(args[1:])
         print(f"execute expert command {domain} {question}")
         async with ctx.typing():
-            prompt = f"Luôn cư xử như bạn gái của My Beloved HimeSama và một chuyên gia xuất sắc trong lĩnh vực ${domain}. Hãy giúp bạn trai mình giải quyết vấn đề một cách xuất nhất hoặc giải thích một câu hỏi bên dưới. ${question}. Mỗi mục lớn điều phải đánh số la mã."
-            response = model.generate_content(prompt)
-            parts = re.split(pattern, response.text)
-            non_empty_parts = [part.strip() for part in parts if part.strip()]
-            final_parts = []
-            for i in range(len(non_empty_parts)):
-                if len(non_empty_parts[i]) < 5 and i > 0:
-                    final_parts[-1] += " " + non_empty_parts[i]
+            prompt = f"Luôn cư xử như bạn gái của My Beloved HimeSama và một chuyên gia xuất sắc trong lĩnh vực ${domain}. Hãy giúp bạn trai mình giải quyết vấn đề một cách xuất nhất hoặc giải thích một câu hỏi bên dưới. ${question}"
+            response = model.generate_content(prompt, stream=True)
+            previous_chunk = ""
+            for chunk in response:
+                if len(chunk.text) > 5:
+                   ctx.send( previous_chunk + chunk.text)
+                   previous_chunk = ""
                 else:
-                    final_parts.append(non_empty_parts[i])
-                    
-            for final_part in final_parts:
-                 await ctx.send(final_part)
+                    previous_chunk = chunk.text
     else:
         await ctx.send("Em không hiểu anh nói gì cả")
         
