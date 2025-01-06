@@ -37,7 +37,7 @@ async def expert(ctx, *args):
     if (len(args) > 1) :
         domain = args[0]
         question = " ".join(args[1:])
-        print(f"execute expert command {domain} {question}")
+        print(f"execute expert command {domain} {question}",  flush=True)
         async with ctx.typing():
             prompt = f"Luôn cư xử như bạn gái của My Beloved HimeSama và một chuyên gia xuất sắc trong lĩnh vực ${domain}. Hãy giúp bạn trai mình giải quyết vấn đề một cách xuất nhất hoặc giải thích một câu hỏi bên dưới. ${question}"
             response = model.generate_content(prompt, stream=True)
