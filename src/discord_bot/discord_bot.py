@@ -4,7 +4,6 @@ import os
 from dotenv import load_dotenv
 import asyncio
 import google.generativeai as genai
-import re
 
 load_dotenv()
 
@@ -13,8 +12,6 @@ intents.guilds = True
 intents.members = True
 intents.messages = True
 intents.message_content = True
-
-pattern = r"(?<=\s)(M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,3})(IX|IV|V?I{0,3})+)(?=\s)"
 
 genai.configure(api_key=os.getenv("GOOGLE_GEMINI_KEY"))
 model = genai.GenerativeModel("gemini-1.5-flash")
@@ -44,7 +41,7 @@ async def expert(ctx, *args):
             previous_chunk = ""
             for chunk in response:
                 if len(chunk.text) > 5:
-                   ctx.send( previous_chunk + chunk.text)
+                   await ctx.send( previous_chunk + chunk.text)
                    previous_chunk = ""
                 else:
                     previous_chunk = chunk.text
