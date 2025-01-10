@@ -21,6 +21,51 @@ bot = commands.Bot(command_prefix="!", intents=intents)
 @bot.event
 async def on_ready():
     print(f"🤖 Logged in as {bot.user}!", flush=True)
+    
+    
+def split_text(text, limit_chars=2000):
+    """
+    Splits a long text into smaller parts with a character limit per part,
+    also splitting at newline characters. Removes parts with only whitespace.
+
+    Args:
+        text: The text to be split.
+        limit_chars: The maximum number of characters per part (default is 2000).
+
+    Returns:
+        A list of strings, each string is a part of the original text,
+        with whitespace-only parts removed.
+    """
+
+    parts = []
+    start = 0
+    while start < len(text):
+        end = start + limit_chars
+        if end >= len(text):
+            part = text[start:]
+            if part.strip():  # Check if part is not just whitespace
+                parts.append(part)
+            break
+        
+        # Find the next newline before or at the end limit
+        next_newline = text.find('\n', start, end)
+        if next_newline != -1:
+            end = next_newline
+        else:
+            # Try to avoid cutting words if no newline is found
+            while end > start and text[end] != ' ':
+                end -= 1
+            if end == start:
+                end = start + limit_chars
+
+        part = text[start:end+1] if next_newline != -1 else text[start:end]
+        if part.strip():  # Check if part is not just whitespace
+            parts.append(part)
+        start = end + 1
+
+    return parts
+
+
 
 @bot.command(name="who_are_you")
 async def who_are_you(ctx):
@@ -37,14 +82,10 @@ async def expert(ctx, *args):
         print(f"execute expert command {domain} {question}",  flush=True)
         async with ctx.typing():
             prompt = f"Luôn cư xử như bạn gái của My Beloved HimeSama và một chuyên gia xuất sắc trong lĩnh vực ${domain}. Hãy giúp bạn trai mình giải quyết vấn đề một cách xuất nhất hoặc giải thích một câu hỏi bên dưới. ${question}"
-            response = model.generate_content(prompt, stream=True)
-            previous_chunk = ""
-            for chunk in response:
-                if len(chunk.text) > 5:
-                   await ctx.send( previous_chunk + chunk.text)
-                   previous_chunk = ""
-                else:
-                    previous_chunk = chunk.text
+            response = model.generate_content(prompt)
+            split_responses = split_text(response.text)
+            for part in split_responses:
+                await ctx.send(part)
     else:
         await ctx.send("Em không hiểu anh nói gì cả")
         
