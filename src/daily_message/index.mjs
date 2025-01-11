@@ -34,7 +34,7 @@ export const handler = async (event, context) =>{
           for (let memberId of memberIds) {
             const member = await client.users.fetch(memberId);
             if (member) {
-              await member.send(result);
+              await member.send(result.text());
               console.log(`Sent daily greeting to ${member.tag}`);
             }
           }
