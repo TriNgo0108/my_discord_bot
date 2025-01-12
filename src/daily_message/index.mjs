@@ -18,7 +18,7 @@ export const handler = async (event, context) =>{
   const genAI = new GoogleGenerativeAI(process.env.GOOGLE_GEMINI_KEY);
   const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
   
-  const prompt = "Please act as my wife and send me a warm and loving reminder in Vietnamese to drink water and keep the tone gentle, caring. Avoid including any extra notes or signature. The message should be simple as possible";
+  const prompt = "Please act as my wife and send me a sweet and loving good morning message in Vietnamese. Also, kindly include the weather forecast for Can Tho today. and add some cute icons. Please keep it warm and loving, and do not add any extra notes, signature.";
   
   const result = await model.generateContent(prompt);
 
