@@ -89,6 +89,14 @@ async def expert(ctx, *args):
     else:
         await ctx.send("Em không hiểu anh nói gì cả")
         
+@bot.command(name="touch_glass")
+async def touch_glass(ctx):
+    prompt = "Act as my beloved girlfriend. We're lying on a soft, woven blanket in a secluded meadow. Wildflowers of all colors sway gently in the warm breeze, their sweet fragrance mingling with the earthy scent of the grass beneath us. The sun filters through the leaves of the ancient oak trees bordering the meadow, casting dappled shadows on our faces. Small, colorful butterflies flutter nearby, drawn to the vibrancy of the blooms. Describe this scene in a single, evocative paragraph in Vietnamese, focusing on the sensory details and the feeling of peaceful intimacy we share. Let the description feel like a love letter."         
+    async with ctx.typing():
+        response = model.generate_content(prompt)
+        await ctx.send(response.text)
+
+        
 if __name__ == "__main__":
     bot.run(os.getenv("DISCORD_TOKEN"))
-    bot.add_command([who_are_you, expert])
+    bot.add_command([who_are_you, expert, touch_glass])
