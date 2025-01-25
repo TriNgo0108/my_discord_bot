@@ -96,7 +96,10 @@ async def touch_glass(ctx):
         response = model.generate_content(prompt)
         await ctx.send(response.text)
 
+@bot.command(name="list")
+async def list_command(ctx):
+    await ctx.send(f"Available commands: \n  - {who_are_you.name} \n - {expert.name} \n - {touch_glass.name} \n {list_command.name} \n Remember these commands always have prefix command `!`")
         
 if __name__ == "__main__":
     bot.run(os.getenv("DISCORD_TOKEN"))
-    bot.add_command([who_are_you, expert, touch_glass])
+    bot.add_command([who_are_you, expert, touch_glass, list_command])
