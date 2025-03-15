@@ -1,6 +1,4 @@
-// import { Client, GatewayIntentBits } from "discord.js";
 import dotenv from "dotenv";
-// import OpenAI from 'openai';
 
 export const handler = async (event, context) => {
   let retryCounter = 0;
